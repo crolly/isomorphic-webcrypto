@@ -111,6 +111,8 @@ const secured = new Promise((resolve, reject) => {
           deriveBits = ref.deriveBits;
         }
         return deriveBits.apply(ref, arguments);
+      } else if (algorithm.name.toUpperCase() === 'ECDH') {
+        algorithm.namedCurve = 'P-256'
       }
 
       return originalDeriveBits.apply(this, arguments);
