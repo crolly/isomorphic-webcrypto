@@ -229,6 +229,10 @@ crypto.subtle.exportKey = function exportKey() {
 
 const originalDigest = crypto.subtle.digest;
 crypto.subtle.digest = function digest() {
+  // ensure compatibility with 2key-ratchet (algorithm must be of type object)
+  arguments[0] = typeof arguments[0] !== 'object' ? {
+    name: arguments[0]
+  } : arguments[0]
   arguments[1] = ensureUint8Array(arguments[1]);
   return originalDigest.apply(this, arguments);
 }
